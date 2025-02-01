@@ -15,4 +15,4 @@ Configurações pessoais para Neovim, Kitty, Tmux e Vim.
 1. Clone o repositório:
 
    ```bash
-      git clone https://github.com/seu-usuario/dotfiles.git ~/dotfiles
+      git clone https://github.com/Nelson0Simao/My-dotfiles.git ~/dotfiles
