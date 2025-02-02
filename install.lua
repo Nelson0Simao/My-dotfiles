@@ -8,27 +8,35 @@
 
 local function command_exists(command)
 	local handle = io.popen("command -v " .. command .. " 2>/dev/null")
-	local result = handle:read("*a")
-	handle:close()
-	return result ~= ""
+	if handle then
+		local result = handle:read("*a")
+		handle:close()
+		return result ~= ""
+	else
+		print("[ERROR] comando não existe")
+	end
 end
 
-local OS
+local OS = "debian"
 
 if command_exists("pacman") then
 	OS = "arch"
 elseif command_exists("apt") then
 	OS = "debian"
 else
-	print("Sistema não suportado")
+	print("[ERROR] Sistema não suportado")
 	os.exit(1)
 end
 
 local function exec(command)
 	local handle = io.popen(command)
-	local result = handle:read("*a")
-	handle:close()
-	return result
+	if handle then
+		local result = handle:read("*a")
+		handle:close()
+		return result
+	else
+		print("[ERROR] Falha ao executar o comando: " .. command)
+	end
 end
 
 local OS = nil
