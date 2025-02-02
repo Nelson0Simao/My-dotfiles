@@ -1,61 +1,85 @@
 " Data: 2025-01-20
-" Exemplo de do meu ~/.vimrc
+" Exemplo do meu ~/.vimrc
 
-" Configuração básica para produtividade
-let g:copilot_enabled = 1
-
-set nocompatible              " Desabilita o modo compatível
-
+" ============================
+" CONFIGURAÇÃO BÁSICA
+" ============================
+set nocompatible              " Desabilita o modo compatível com vi
 filetype indent plugin on
-
 syntax on
 
-set ignorecase
-set smartcase
+" ============================
+" OPÇÕES DE EDIÇÃO
+" ============================
+set ignorecase                " Ignora maiúsculas/minúsculas ao buscar
+set smartcase                 " Mantém maiúsculas se houver na busca
+set autoindent                " Mantém a indentação da linha anterior
 
-set autoindent
+" ============================
+" EXIBIÇÃO
+" ============================
+set relativenumber            " Mostra números relativos
+set number                    " Mostra números absolutos
+set termguicolors             " Habilita suporte a cores verdadeiras
+set background=dark           " Define tema escuro
 
-set relativenumber            " Números relativos
-set number                    " Exibe números de linha
+" ============================
+" TABULAÇÃO
+" ============================
+set tabstop=4                 " Define tabulação como 4 espaços
+set shiftwidth=4              " Define recuo como 4 espaços
+set softtabstop=4             " Mantém a tabulação alinhada
+set expandtab                 " Converte tabs em espaços
+set smarttab                  " Ajusta tabulação automaticamente
 
-set tabstop=4                 " Tamanho do tab em 4 espaços
-set shiftwidth=4              " Recuo automático de 4 espaços
-set softtabstop=4
-set expandtab                 " Usa espaços ao invés de tabs
-set smarttab
+" ============================
+" CLIPBOARD
+" ============================
+set clipboard=unnamedplus     " Usa clipboard do sistema
 
-set clipboard=unnamedplus     " Habilita clipboard do sistema
-set termguicolors             " Habilita cores verdadeiras
+" ============================
+" CONFIGURAÇÃO DE PLUGINS
+" ============================
+let g:copilot_enabled = 1     " Ativa GitHub Copilot
+let NERDTreeShowHidden=1      " Exibe arquivos ocultos no NERDTree
 
-let NERDTreeShowHidden=1
-
-" Mapas úteis
-map <C-f> :NERDTreeToggle<CR>
+" ============================
+" MAPAS DE TECLAS
+" ============================
+" Atalhos úteis
 nnoremap <C-s> :w<CR>         " Salva com Ctrl+S
 nnoremap <C-q> :q<CR>         " Sai com Ctrl+Q
-inoremap jj <Esc>             " Sai do modo inserção com jj
-vnoremap < <gv                " Mantém seleção ao indentar à esquerda
-vnoremap > >gv                " Mantém seleção ao indentar à direita
+inoremap jj <Esc>             " Sai do modo inserção com 'jj'
 
+" Indentação mantendo seleção
+vnoremap < <gv                " Indenta para a esquerda
+vnoremap > >gv                " Indenta para a direita
+
+" Navegação no NERDTree
+map <C-f> :NERDTreeToggle<CR>
+
+" ============================
+" MOVIMENTAÇÃO DE LINHAS
+" ============================
+" Mover linha atual
 nnoremap <A-k> :m .-2<CR>==
 nnoremap <A-j> :m .+1<CR>==
 
+" Mover bloco selecionado
 vnoremap <A-k> :m '<-2<CR>gv=gv
 vnoremap <A-j> :m '>+1<CR>gv=gv
 
-
-" Ablitando tb as setas para mover linha
+" Mover linhas com setas
 nnoremap <C-Up> :m .-2<CR>==
 nnoremap <C-Down> :m .+1<CR>==
 
 vnoremap <C-Up> :m '<-2<CR>gv=gv
 vnoremap <C-Down> :m '>+1<CR>gv=gv
 
-" Plugins com vim-plug
+" ============================
+" GERENCIADOR DE PLUGINS (vim-plug)
+" ============================
 call plug#begin('~/.vim/plugged')
-
-" Gerenciador de LSP
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Navegação de arquivos
 Plug 'preservim/nerdtree'
@@ -67,11 +91,10 @@ Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-commentary'
 
 call plug#end()
-set background=dark
 
-
-
-" Configuração do Coc.nvim
+" ============================
+" CONFIGURAÇÃO DO Coc.nvim (Comentado por enquanto)
+" ============================
 " let g:coc_global_extensions = [
 "            \ 'coc-json',
 "            \ 'coc-python',
@@ -83,10 +106,11 @@ set background=dark
 "            \ 'coc-go',
 "            \ 'coc-clangd'
 "            \ ]
-"   Mapas para navegação no Coc
-"   nnoremap <silent> gd <Plug>(coc-definition) " Ir para definição
-"   nnoremap <silent> gr <Plug>(coc-references) " Referências
-"   nnoremap <silent> K :call CocActionAsync('doHover')<CR> " Documentação
+
+" Mapas para navegação no Coc
+" nnoremap <silent> gd <Plug>(coc-definition) " Ir para definição
+" nnoremap <silent> gr <Plug>(coc-references) " Referências
+" nnoremap <silent> K :call CocActionAsync('doHover')<CR> " Documentação
 
 " Completar ao pressionar <Tab>
 inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
