@@ -6,37 +6,54 @@
 -- Description: Instalar dependecias da aplicação
 -- =============================================================
 
+local function command_exists(command)
+	local handle = io.popen("command -v " .. command .. " 2>/dev/null")
+	local result = handle:read("*a")
+	handle:close()
+	return result ~= ""
+end
+
+local OS
+
+if command_exists("pacman") then
+	OS = "arch"
+elseif command_exists("apt") then
+	OS = "debian"
+else
+	print("Sistema não suportado")
+	os.exit(1)
+end
+
 local function exec(command)
-    local handle = io.popen(command)
-    local result = handle:read("*a")
-    handle:close()
-    return result
+	local handle = io.popen(command)
+	local result = handle:read("*a")
+	handle:close()
+	return result
 end
 
 local OS = nil
 
 if exec("command -v pacman") ~= "" then
-    OS = "arch"
+	OS = "arch"
 elseif exec("command -v apt") ~= "" then
-    OS = "debian"
+	OS = "debian"
 else
-    print("Sistema não suportado")
-    os.exit(1)
+	print("System not Suported!")
+	os.exit(1)
 end
 
-local pakages = {
-    arch = {"kitty", "neovim", "vim", "tmux", "zsh"},
-    debian = {"kitty", "neovim", "vim", "tmux", "zsh"}
-}
+local packages = { "kitty", "neovim", "vim", "tmux", "zsh" }
 
-function install_pakages(system)
-    local gem = system == "arch" and "sudo pacman -S " or "sudo apt install -y "
-    local command = gem .. table.concat(pakages[system], " ")
-    print("installing pakages:" .. command);
-    os.execute(command)
-
+function install_package()
+	local command
+	if OS == "arch" then
+		command = "sudo pacman -S --noconfirm "
+	elseif OS == "debian" then
+		command = "sudo apt update && sudo apt install -y " .. table.concat(packages, " ")
+	end
+	print("Instalando dependencias: " .. command)
+	os.execute(command)
 end
 
 -- Executa a instalação
-install_pakages(OS)
-
+install_package()
