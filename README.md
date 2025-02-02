@@ -13,6 +13,11 @@ Configurações pessoais para Neovim, Kitty, Tmux e Vim.
 ## Instalação
 
 1. Clone o repositório:
-
    ```bash
       git clone https://github.com/Nelson0Simao/My-dotfiles.git ~/dotfiles
+    ```
+
+2. Instala via script:
+    ```bash
+      lua install.lua
+    ```
